@@ -27,10 +27,10 @@ function helpPanel(){
 
 function createQR(){
 	url_qr="$1"
-	qrencode $1 -o assets/qr
+	qrencode $1 -o assets/qr.png
 	echo -e "\n${redColour}[+]${endColour} ${grayColour}Creando codigo QR...${endColour}\n"
 	sleep 2
-	eog assets/qr & disown
+	eog assets/qr.png & disown
 	sleep 1
 	echo -e "\n${redColour}[+]${endColour} ${grayColour}Codigo QR creado correctamente.${endColour}\n"
 	exit 0
