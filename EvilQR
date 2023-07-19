@@ -1,0 +1,56 @@
+#!/bin/bash
+
+#Colores
+greenColour="\e[0;32m\033[1m"
+endColour="\033[0m\e[0m"
+redColour="\e[0;31m\033[1m"
+blueColour="\e[0;34m\033[1m"
+yellowColour="\e[0;33m\033[1m"
+purpleColour="\e[0;35m\033[1m"
+turquoiseColour="\e[0;36m\033[1m"
+grayColour="\e[0;37m\033[1m"
+
+echo -e "\n"
+echo -e "${redColour} _____       _  _  _____  _____${endColour}"
+echo -e "${redColour}|   __| _ _ |_|| ||     || __  |${endColour}"
+echo -e "${redColour}|   __|| | || || ||  |  ||    -|${endColour}"
+echo -e "${redColour}|_____| \_/ |_||_||__  _||__|__|${endColour}"
+echo -e "${redColour}                     |__|       ${endColour}"
+echo -e "\t\t${yellowColour}github.com/abund4nt${endColour}"
+
+function helpPanel(){
+	echo -e "\n${redColour}[+]${endColour} ${grayColour}Uso ./EvilQR.sh${endColour}\n"
+	echo -e "\t${redColour}-h${endColour} ${grayColour}Muestra este panel de ayuda.${endColour}"
+	echo -e "\t${redColour}-u${endColour} ${grayColour}URL que va redireccionar el codigo QR${endColour}"
+	echo -e "\t\t${yellowColour}Example: EvilQR -u instagram.com${endColour}"
+}
+
+function createQR(){
+	url_qr="$1"
+	qrencode $1 -o assets/qr
+	echo -e "\n${redColour}[+]${endColour} ${grayColour}Creando codigo QR...${endColour}\n"
+	sleep 2
+	eog assets/qr & disown
+	sleep 1
+	echo -e "\n${redColour}[+]${endColour} ${grayColour}Codigo QR creado correctamente.${endColour}\n"
+	exit 0
+}
+
+
+declare -i parameter_counter=0
+
+while getopts "u:h" arg; do
+	case $arg in
+		u) url_qr="$OPTARG"; let parameter_counter+=1;;
+		h) ;;
+	esac
+done
+
+if [ $parameter_counter -eq 0 ]; then
+	helpPanel
+elif [ $parameter_counter -eq 1 ]; then
+	createQR $url_qr
+else
+	echo -e "ERROR"
+fi
+
